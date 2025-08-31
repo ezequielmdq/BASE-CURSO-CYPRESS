@@ -1,7 +1,35 @@
 {
+  "name": "base-curso-cypress",
+  "version": "1.0.0",
+  "description": "Curso de QA Automation con Cypress, Gherkin y Cucumber",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cypress open",
+    "cypress:open:dev": "cypress open --e2e --browser chrome -e ENV=DEV",
+    "cypress:open:tst": "cypress open --e2e --browser chrome -e ENV=TST",
+    "cypress:runner:api:tst": "cypress run --spec cypress/journeys/features/api/**/*.feature --browser chrome -e ENV=TST",
+    "cypress:runner:e2e:tst": "cypress run --spec cypress/journeys/features/e2e/**/*.feature --browser chrome -e ENV=TST"
+  },
+  "keywords": [
+    "Cypress",
+    "Gherkin",
+    "Cucumber",
+    "API",
+    "E2E",
+    "Testing",
+    "Automation"
+  ],
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^22.2.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
+    "@cucumber/cucumber": "^11.3.0",
     "@cypress/browserify-preprocessor": "^3.0.2",
-    "cypress": "^14.5.4"
+    "cypress": "^14.5.4",
+    "cypress-automation-framework": "file:",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-esbuild-preprocessor": "^1.0.2",
+    "cypress-plugin-api": "^2.11.2",
+    "esbuild": "^0.25.9",
+    "multiple-cucumber-html-reporter": "^3.9.3"
   }
 }
