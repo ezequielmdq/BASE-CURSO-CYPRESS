@@ -1,11 +1,12 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
+import BusquedaDeProductoPage from '../../../pages/BusquedaDeProductoPage';
 
 const envi = Cypress.env('ENV');
 
 const url2 = Cypress.env(`${envi}`).url2;
 
-var precioBusqueda = '';
-var precioVista = '';
+let precioBusqueda = '';
+let precioVista = '';
 
 
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -13,37 +14,47 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 Given("el usuario abre la web de automation exercise", function () {
-    cy.visit(`${url2}`);
+    
+    BusquedaDeProductoPage.ingresoPagina(url2);
+
 });
 
 When("el usuario hace clic en el boton products", function () {
-    cy.get('.shop-menu > .nav > :nth-child(2) > a').click();
+    
+    BusquedaDeProductoPage.botonProducto();
+
 });
 
 When("el usuario realiza la busqueda del producto {string}", function (producto) {
-    cy.get('#search_product').type(producto);
-    cy.get('#submit_search').click();
+    
+    BusquedaDeProductoPage.busquedaProducxto(producto);
+
 });
 
 When("el usuario obtiene el precio del producto", function () {    
-    cy.get('.productinfo > h2').then(($precio) => {
-        precioBusqueda = $precio.text();
-    });
     
+    BusquedaDeProductoPage.obtenerPrecioProducto((precio) => {
+        precioBusqueda = precio;
+    });
+   
 });
 
 When("el usuario hace clic en en el boton view product", function () {    
-   cy.get('.choose > .nav > li > a').click();   
+   
+    BusquedaDeProductoPage.botonViewProduct();   
 
 });
 
 Then("el sistema muestra la informacion del producto {string}", function (producto) { 
-    cy.get('.product-information > h2').should('have.text', producto);
-    cy.get(':nth-child(5) > span').then(($precio) => {
-        precioVista = $precio.text();
-    });   
+    
+    precioVista = BusquedaDeProductoPage.validarInformacionProducto(producto, (precio) => {
+        precioVista = precio;
+    });
+    
 });
 
 When("el sistema muestra el mismo precio del producto que se obtuvo en la busqueda", function () {    
-    expect(precioBusqueda).to.equal(precioVista);       
+
+    BusquedaDeProductoPage.compararPrecios(precioBusqueda, precioVista);           
+
 });

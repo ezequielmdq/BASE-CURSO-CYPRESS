@@ -1,6 +1,7 @@
 
 
 class RegisterPage {
+    
     elements = {
         inputNombre: () => cy.get('#firstName'),
         inputApellido: () => cy.get('#lastName'),
