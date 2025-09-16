@@ -1,6 +1,13 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
+import RegisterPage from '../../../pages/RegisterPage';
 
 const envi = Cypress.env('ENV');
+
+const nombre = Cypress.env(`${envi}`).nombre;
+const apellido = Cypress.env(`${envi}`).apellido;
+const email = Cypress.env(`${envi}`).email;
+const celular = Cypress.env(`${envi}`).celular;
+const direccion = Cypress.env(`${envi}`).direccion;
 
 const url = Cypress.env(`${envi}`).url;
 
@@ -9,50 +16,47 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 Given("un usuario ingresa al form de registro", function () {
-    cy.visit(`${url}`);
+    RegisterPage.ingresoPagina(url);
 });
 
 When("ingresa el primer nombre", function () {
-    cy.get('#firstName').type('Juan');
+    RegisterPage.ingresoNombre(nombre);
 });
 
 When("ingresa el apellido", function () {
-    cy.get('#lastName').type('Perez');
+    RegisterPage.ingresoApellido(apellido);
 });
 
 When("ingresa el email", function () {
-    cy.get('#userEmail').type('juan@gmail.com');
+    RegisterPage.ingtesoEmail(email);   
 });
 
 When("elige el genero", function () {
-    cy.get('#genterWrapper > .col-md-9 > :nth-child(1)').click();
+    RegisterPage.seleccionGenero();
 }); 
 
 When("ingresa el numero de celular", function () {
-    cy.get('#userNumber').type('1234567890');
+    RegisterPage.ingresoCelular(celular);   
 });
 
 When("ingresa la fecha de nacimiento", function () {
-    cy.get('#dateOfBirthInput').click();
-    cy.get('.react-datepicker__month-select').select('2');  
-    cy.get('.react-datepicker__year-select').select('1990');
-    cy.get('.react-datepicker__day--015').click();  
+    RegisterPage.ingresoFechaNacimiento(); 
 });
 
 When("elige un hobbie", function () {
-    cy.get('#hobbiesWrapper > .col-md-9 > :nth-child(1)').click();
+    RegisterPage.seleccionHobbie();
 });
 
 When("ingresa la direccion actual en donde vive", function () {
-    cy.get('#currentAddress').type('Calle Falsa 123');          
+    RegisterPage.ingresoDireccion(direccion);          
 });
 
-When("hace click en el boton 'Submit'", function () {
-    cy.get('#submit').click({ force: true });
+When("hace click en el boton {string}", function () {
+    RegisterPage.clickBoton();
 });
     
-Then("aparece un cuadro de dialogo con el titulo 'Thanks for submitting the form' que confirma el registro del usuario", function () {
-    cy.get('#example-modal-sizes-title-lg').should('have.text', 'Thanks for submitting the form');
+Then("aparece un cuadro de dialogo con el titulo {string} que confirma el registro del usuario", function (titulo) {
+    RegisterPage.validarRegistro(titulo);
 });
 
 

@@ -20,8 +20,8 @@ When("el usuario hace clic en el boton products", function () {
     cy.get('.shop-menu > .nav > :nth-child(2) > a').click();
 });
 
-When("el usuario realiza la busqueda del producto Blue Top", function () {
-    cy.get('#search_product').type('Blue Top');
+When("el usuario realiza la busqueda del producto {string}", function (producto) {
+    cy.get('#search_product').type(producto);
     cy.get('#submit_search').click();
 });
 
@@ -37,8 +37,8 @@ When("el usuario hace clic en en el boton view product", function () {
 
 });
 
-Then("el sistema muestra la informacion del producto Blue Top", function () { 
-    cy.get('.product-information > h2').should('have.text', 'Blue Top');
+Then("el sistema muestra la informacion del producto {string}", function (producto) { 
+    cy.get('.product-information > h2').should('have.text', producto);
     cy.get(':nth-child(5) > span').then(($precio) => {
         precioVista = $precio.text();
     });   
